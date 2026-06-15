@@ -43,7 +43,7 @@ export default function FieldConfig() {
   const invalidate = () => qc.invalidateQueries({ queryKey: ['column-config', entity] });
 
   const createMutation = useMutation({
-    mutationFn: (payload: typeof emptyForm & { entity: ConfigurableEntity; options?: string[] }) =>
+    mutationFn: (payload: { fieldLabel: string; fieldName: string; fieldType: FieldType; isRequired: boolean; isVisible: boolean; entity: ConfigurableEntity; options?: string[] }) =>
       api.post('/column-config', payload),
     onSuccess: () => { invalidate(); setModal(false); setForm(emptyForm); setError(''); },
     onError: (e: unknown) => setError(getMsg(e)),

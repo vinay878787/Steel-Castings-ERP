@@ -124,7 +124,7 @@ export default function Suppliers() {
           ].map(({ k, label }) => (
             <div key={k}>
               <label className="label">{label}</label>
-              <input className="input" value={(form as Record<string, string>)[k]}
+              <input className="input" value={form[k as keyof typeof form] as string}
                 onChange={(e) => setForm((f) => ({ ...f, [k]: e.target.value }))} />
             </div>
           ))}
