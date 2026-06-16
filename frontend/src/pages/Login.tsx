@@ -1,14 +1,16 @@
 import { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import api from '../lib/api';
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const login = useAuthStore((s) => s.login);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-  const [tab, setTab] = useState<'login' | 'register'>('login');
+  const initialTab = searchParams.get('tab') === 'register' ? 'register' : 'login';
+  const [tab, setTab] = useState<'login' | 'register'>(initialTab);
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'operator' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -46,6 +48,11 @@ export default function Login() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">FoundryERP</h1>
           <p className="text-gray-500 text-sm mt-1">Manufacturing ERP for Steel Foundries</p>
+        </div>
+        <div className="text-center mb-4">
+          <Link to="/home" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+            ← Back to home
+          </Link>
         </div>
 
         <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
